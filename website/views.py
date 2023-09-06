@@ -10,3 +10,7 @@ def home(request):
                   {'students': Student.objects.all()
                    })
 
+
+def view_student(request, id):
+    student = Student.objects.get(pk=id)
+    return HttpResponseRedirect(reverse('home'))

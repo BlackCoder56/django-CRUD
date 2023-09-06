@@ -12,7 +12,7 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-graduation-cap fa-lg ms-1 me-2"></i>School Management System</a>
+      <i class="fa-solid fa-graduation-cap fa-lg ms-1 me-2"></i>GreenHill School Management System</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
 </nav>
 
 <div class="container-fluid">
-  <h3 class="m-4">All Students</h3>
+  <h3 class="m-4 text-center text-body-dark" >All Students' Record</h3>
   <div class="col-12">
     {% if students %}
       <div class="card border-light mb-3 ms-4 me-4 mb-4" >
@@ -57,7 +57,7 @@
                   <th scope="col">Email</th>
                   <th scope="col">Field of Study</th>
                   <th scope="col">GPA</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
@@ -70,7 +70,92 @@
                   <td>{{ student.email }}</td>
                   <td>{{ student.field_of_study }}</td>
                   <td>{{ student.gpa }}</td>
-                  <td>Action</td>
+                  <td>
+                      <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{ student.id }}" >
+                          <i class="fa-solid fa-circle-info fa-lg"></i>
+                      </button>
+                      <!--- Modal Viewing a Student  --->
+
+                      <div class="modal" id="myModal{{ student.id }}" tabindex="-1" aria-labelledby="myModallable1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Student: <strong>
+                                        {{ student.first_name }} {{ student.last_name }}
+                                            </strong>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true"></span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <!--
+                                  <ul class="list-unstyled">
+                                      <li>Student Id:      <strong>{{ student.student_id }}</strong></li>
+                                       <li>First name:     <strong>{{ student.first_name }}</strong></li>
+                                       <li>Last name:      <strong>{{ student.last_name }}</strong></li>
+                                       <li>Student Email:  <strong>{{ student.email }}</strong></li>
+                                       <li>Field of Study: <strong>{{ student.field_of_study }}</strong></li>
+                                       <li>Student GPA:    <strong>{{ student.gpa }}</strong></li>
+                                  </ul>
+-->
+                                  <table class="table table-striped">
+
+                                      <tbody>
+                                        <tr>
+                                          <td>Student Id:</td>
+                                          <td>
+                                              <strong>{{ student.student_id }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>First name</td>
+                                          <td>
+                                              <strong>{{ student.first_name }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Last name</td>
+                                          <td>
+                                              <strong>{{ student.last_name }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Student Email</td>
+                                          <td>
+                                              <strong>{{ student.email }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Field of Study</td>
+                                          <td>
+                                              <strong>{{ student.field_of_study }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Student GPA</td>
+                                          <td>
+                                              <strong>{{ student.gpa }}</strong>
+                                          </td>
+                                        </tr>
+
+
+
+
+                                      </tbody>
+                                    </table>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+
+
+                  </td>
                 </tr>
 
               {% endfor %}
