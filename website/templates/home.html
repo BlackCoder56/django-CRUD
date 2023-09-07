@@ -1,76 +1,124 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>School Management System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"  />
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-</head>
-<body class="d-flex flex-column min-vh-100">
-
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-graduation-cap fa-lg ms-1 me-2"></i>School Management System</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">
-            <i class="fa-solid fa-list fa-lg ms-1 me-1"></i> All Student
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-           <i class="fa-solid fa-plus fa-lg ms-1 me-1"></i> Add Student
-          </a>
-        </li>
-      </ul>
-
-    </div>
-  </div>
-</nav>
-
-<div class="container-fluid">
-  <h3 class="m-4">All Students</h3>
+{% extends "base.html" %}
+{% block body %}
+ <h3 class="m-4 text-center text-body-dark" >All Students' Record</h3>
   <div class="col-12">
     {% if students %}
       <div class="card border-light mb-3 ms-4 me-4 mb-4" >
         <div class="card-header">
           <i class="fa-solid fa-list fa-lg ms-1 me-1"></i> Student Records
         </div>
-        <div class="card-body">
-       <p class="card-text">
-         <div class="table-responsive">
+            <div class="card-body">
+           <p class="card-text">
+             <div class="table-responsive">
 
-          <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Student ID</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Field of Study</th>
-                  <th scope="col">GPA</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for student in students %}
+              <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Student ID</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Field of Study</th>
+                      <th scope="col">GPA</th>
+                      <th scope="col">ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for student in students %}
 
-                <tr>
-                  <td>{{ student.student_id }}</td>
-                  <td>{{ student.first_name }}</td>
-                  <td>{{ student.last_name }}</td>
-                  <td>{{ student.email }}</td>
-                  <td>{{ student.field_of_study }}</td>
-                  <td>{{ student.gpa }}</td>
-                  <td>Action</td>
+                    <tr>
+                      <td>{{ student.student_id }}</td>
+                      <td>{{ student.first_name }}</td>
+                      <td>{{ student.last_name }}</td>
+                      <td>{{ student.email }}</td>
+                      <td>{{ student.field_of_study }}</td>
+                      <td>{{ student.gpa }}</td>
+                      <td>
+                      <button type="button" class="btn btn-success me-1" href="{% url 'view_student' student.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{ student.id }}" >
+                          <i class="fa-solid fa-circle-info fa-lg"></i>
+                      </button>
+                      <!--- Modal Viewing a Student  --->
+
+                      <div class="modal" id="myModal{{ student.id }}" tabindex="-1" aria-labelledby="myModallable1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Student: <strong>
+                                        {{ student.first_name }} {{ student.last_name }}
+                                            </strong>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true"></span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <!--
+                                  <ul class="list-unstyled">
+                                      <li>Student Id:      <strong>{{ student.student_id }}</strong></li>
+                                       <li>First name:     <strong>{{ student.first_name }}</strong></li>
+                                       <li>Last name:      <strong>{{ student.last_name }}</strong></li>
+                                       <li>Student Email:  <strong>{{ student.email }}</strong></li>
+                                       <li>Field of Study: <strong>{{ student.field_of_study }}</strong></li>
+                                       <li>Student GPA:    <strong>{{ student.gpa }}</strong></li>
+                                  </ul>
+-->
+                                  <table class="table table-striped">
+
+                                      <tbody>
+                                        <tr>
+                                          <td>Student Id:</td>
+                                          <td>
+                                              <strong>{{ student.student_id }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>First name</td>
+                                          <td>
+                                              <strong>{{ student.first_name }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Last name</td>
+                                          <td>
+                                              <strong>{{ student.last_name }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Student Email</td>
+                                          <td>
+                                              <strong>{{ student.email }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Field of Study</td>
+                                          <td>
+                                              <strong>{{ student.field_of_study }}</strong>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>Student GPA</td>
+                                          <td>
+                                              <strong>{{ student.gpa }}</strong>
+                                          </td>
+                                        </tr>
+
+
+
+
+                                      </tbody>
+                                    </table>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+
+
+                  </td>
                 </tr>
 
               {% endfor %}
@@ -89,14 +137,4 @@
 
   </div>
 </div>
-<footer class="mt-auto mb-4">
-  <div class="text-center">
-  <span>
-    Copyright &copy; <script>document.write(new Date().getFullYear())</script> BlackCoder
-  </span>
-  </div>
-</footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
